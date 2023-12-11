@@ -63,7 +63,7 @@ const Carousel = ({data, loading}) => {
                         </div>
                     ) : (
                         <div 
-                        className='carouselItems flex gap-[10px] overflow-y-scroll -mx-[20px] px-[20px] md:gap-[20px] overflow-hidden m-0 p-0 ' 
+                        className='carouselItems flex gap-[10px] overflow-x-scroll -mx-[20px] px-[20px] md:gap-[20px] m-0 p-0 ' 
                         ref = {carouselContainer}>
                             {data?.map((item) => {
                                 console.log(item.release_Date);
