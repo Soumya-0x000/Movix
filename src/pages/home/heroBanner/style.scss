@@ -1,0 +1,17 @@
+// @import "../../../mixins.scss";
+
+.heroBanner {
+    .backdrop-img {
+        .lazy-load-image-background {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .opacity-layer {
+        background: linear-gradient(
+            180deg,
+            rgba(127, 169, 228, 0) 0%,
+            #04152d 79.17%
+        );
+    }
+}

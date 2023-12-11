@@ -1,0 +1,27 @@
+.header {
+    &.top {
+        backdrop-filter: blur(3.5px);
+        -webkit-backdrop-filter: blur(3.5px);
+    }
+    &.show {
+        background-color: #020c1b;
+    }
+    &.hide {
+        transform: translateY(-60px);
+    }
+    .searchBar {
+        animation: mobileMenu 0.3s ease forwards;
+    }
+    .mobileMenuItem {
+        animation: mobileMenu 0.3s ease forwards;
+    }
+}
+
+@keyframes mobileMenu {
+    0% {
+        transform: translateY(-130%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
