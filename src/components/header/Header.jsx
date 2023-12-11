@@ -91,7 +91,7 @@ const Header = () => {
             <ContentWrapper>
                 <div className='flex items-center justify-between'>
                     <div className='logo' onClick={() => navigate('/')}>
-                        <img src={logo} className='scale-125 cursor-pointer'/>
+                        <img src={logo} className='h-[50px] cursor-pointer'/>
                     </div>
 
                     <div className='menuItems list-none hidden md:flex flex-row-reverse sm:flex-row gap-x-6 items-center'>
