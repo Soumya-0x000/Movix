@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import CircleRating from '../circleRating/CircleRating'
 import Genres from '../genres/Genres'
 
-const Carousel = ({data, loading}) => {
+const Carousel = ({data, loading, endPointShowType}) => {
     const carouselContainer = useRef()
     const { url } = useSelector((state) => state.home)
     const navigate = useNavigate()
@@ -74,7 +74,7 @@ const Carousel = ({data, loading}) => {
                                     <div 
                                     key={item.id}
                                     className={`carouselItem w-[125px] cursor-pointer flex-shrink-0 `} 
-                                    onClick={() => navigate(`/${item.media_type}/${item.id}`)}>
+                                    onClick={() => navigate(`/${item.media_type || endPointShowType}/${item.id}`)}>
                                         <div className="posterBlock relative w-full aspect-[1/1.5] bg-cover bg-center mb-[30px] flex items-end justify-between p-[10px]">
                                             <Img 
                                             src={posterUrl} 
