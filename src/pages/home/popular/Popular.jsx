@@ -23,7 +23,7 @@ const Popular = () => {
                 </div>
             </ContentWrapper>
             <div></div>
-            <Carousel data={data?.results} loading={loading} />
+            <Carousel data={data?.results} loading={loading} endPointShowType={endPointShowType} />
         </div>
     )
 }
