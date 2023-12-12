@@ -26,7 +26,7 @@ const HeroBanner = () => {
     }
 
     return (
-        <div className='heroBanner w-full h-[450px] md:h-[700px] bg-black flex items-center relative '>
+        <div className='heroBanner w-full h-[450px] md:h-[700px] bg-black flex items-center relative'>
             {!loading && (
                 <div className='backdrop-img w-full h-[100%] absolute top-0 left-0 opacity-50 overflow-hidden object-cover object-center '>
                     <Img src={background} className='w-full h-full object-cover object-center'/>

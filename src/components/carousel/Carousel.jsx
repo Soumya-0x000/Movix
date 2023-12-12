@@ -3,7 +3,7 @@ import {BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill} from 'react-icons
 import ContentWrapper from '../contentWrapper/ContentWrapper'
 import dayjs from 'dayjs'
 import Img from '../lazyLoadImage/Img'
-import PosterFallback from '../../../public/no-poster.png'
+import PosterFallback from '../../assets/no-poster.png'
 import './carousel.scss'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -53,7 +53,7 @@ const Carousel = ({data, loading}) => {
                         onClick={() => navigation('right')}
                     />
                     {loading ? (
-                        <div className='loadingSkeleton flex gap-x-[10px] md:gap-x-[20px] overflow-y-hidden md:overflow-hidden md:m-0 md:p-0 -mx-[20px] px-[20px] '>
+                        <div className='loadingSkeleton flex gap-x-[10px] md:gap-x-[20px] overflow-y-hidden md:overflow-hidden '>
                             {skItem()}
                             {skItem()}
                             {skItem()}
@@ -63,7 +63,7 @@ const Carousel = ({data, loading}) => {
                         </div>
                     ) : (
                         <div 
-                        className='carouselItems flex gap-[10px] overflow-y-hidden -mx-[20px] px-[20px] md:gap-[20px] md:overflow-hidden m-0 p-0 ' 
+                        className='carouselItems flex gap-[10px] overflow-y-hidden md:gap-[20px] md:overflow-hidden' 
                         ref = {carouselContainer}>
                             {data?.map((item) => {
                                 console.log(item.release_Date);
