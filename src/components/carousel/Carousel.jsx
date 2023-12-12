@@ -66,7 +66,6 @@ const Carousel = ({data, loading, endPointShowType}) => {
                         className='carouselItems flex gap-[10px] overflow-y-hidden md:gap-[20px] md:overflow-hidden' 
                         ref = {carouselContainer}>
                             {data?.map((item) => {
-                                console.log(item.release_Date);
                                 const posterUrl = item.poster_path 
                                     ? url.poster + item.poster_path 
                                     : PosterFallback

@@ -1,13 +1,6 @@
 @import "../../../mixins.scss";
 .detailsBanner {
     .backdrop-img {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0.1;
-        overflow: hidden;
         .lazy-load-image-background {
             width: 100%;
             height: 100%;

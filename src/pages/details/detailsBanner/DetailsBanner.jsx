@@ -3,18 +3,26 @@ import { useParams } from 'react-router-dom'
 import useFetch from '../../../hooks/useFetch'
 import ContentWrapper from '../../../components/contentWrapper/ContentWrapper';
 import "./DetailsBanner.scss"
+import { useSelector } from 'react-redux';
+import Img from "../../../components/lazyLoadImage/Img"
 
 const DetailsBanner = () => {
     const { mediaType, id } = useParams();
-    console.log(mediaType, id);
     const { data, loading } = useFetch(`/${mediaType}/${id}`)
+    const {url} = useSelector((state) => state.home)
 
     return (
         <div className='detailsBanner w-full bg-black pt-[100px] mb-[50px] md:mb-0 md:pt-[120px] min-h-[700px] '>
             {!loading ? (
-                <div>
-                    Details Content
-                </div>
+                <>
+                    {!!data && (
+                        <React.Fragment>
+                            <div className="backdrop-img w-full h-full absolute top-0 left-0 opacity-10 overflow-hidden ">
+                                <Img src={url.backdrop + data?.backdrop_path} className={`w-full h-full object-cover object-center`} />
+                            </div>
+                        </React.Fragment>
+                    )}
+                </>
             ) : (
                 <div className='detailsBannerSkeleton flex relative gap-[25px] md:gap-[50px] '>
                     <ContentWrapper>

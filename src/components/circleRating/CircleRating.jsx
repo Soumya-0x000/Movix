@@ -5,7 +5,7 @@ import './CircleRating.scss'
 
 const CircleRating = ({rating}) => {
     return (
-        <div className='circleRating rounded-full p-[2px] w-[40px] md:w-[50px] h-[40px] md:h-[50px] relative top-[20px] left-3 bg-white flex-shrink-0 '>
+        <div className='circleRating rounded-full p-[2px] w-[40px] md:w-[50px] h-[40px] md:h-[50px] relative top-[20px] left-2 bg-white flex-shrink-0 '>
             <CircularProgressbar
                 value={rating}
                 maxValue={10}
