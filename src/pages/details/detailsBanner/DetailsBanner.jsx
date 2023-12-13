@@ -5,6 +5,7 @@ import ContentWrapper from '../../../components/contentWrapper/ContentWrapper';
 import "./DetailsBanner.scss"
 import { useSelector } from 'react-redux';
 import Img from "../../../components/lazyLoadImage/Img"
+import PosterFallback from "../../../assets/no-poster.png"
 
 const DetailsBanner = () => {
     const { mediaType, id } = useParams();
@@ -12,7 +13,7 @@ const DetailsBanner = () => {
     const {url} = useSelector((state) => state.home)
 
     return (
-        <div className='detailsBanner w-full bg-black pt-[100px] mb-[50px] md:mb-0 md:pt-[120px] min-h-[700px] '>
+        <div className='detailsBanner w-full bg-black pt-[100px] mb-[50px] md:mb-0 md:pt-[120px] min-h-[700px] border'>
             {!loading ? (
                 <>
                     {!!data && (
@@ -20,6 +21,19 @@ const DetailsBanner = () => {
                             <div className="backdrop-img w-full h-full absolute top-0 left-0 opacity-10 overflow-hidden ">
                                 <Img src={url.backdrop + data?.backdrop_path} className={`w-full h-full object-cover object-center`} />
                             </div>
+
+                            <div className="opacity-layer w-full h-[250px] absolute bottom-0 left-0"></div>
+                            <ContentWrapper>
+                                <div className="content">
+                                    <div className="left">
+                                        {data.poster_path ? (
+                                            <Img className={`posterImg`} src={url.backdrop + data.poster_path} />
+                                            ) : (
+                                            <Img className={`posterImg`} src={PosterFallback} />
+                                        )}
+                                    </div>
+                                </div>
+                            </ContentWrapper>
                         </React.Fragment>
                     )}
                 </>
