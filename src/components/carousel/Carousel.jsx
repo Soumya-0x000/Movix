@@ -78,8 +78,10 @@ const Carousel = ({data, loading, endPointShowType}) => {
                                             <Img 
                                             src={posterUrl} 
                                             className={`w-full h-full object-cover object-center`} />
-                                            <CircleRating rating={item.vote_average.toFixed(1)} />
-                                            <Genres data={item.genre_ids.slice(0, 2)} />
+                                            <CircleRating rating={item.vote_average.toFixed(1)} onPage={'carousel'} />
+                                            <div className='hidden md:flex'>
+                                                <Genres data={item.genre_ids.slice(0, 2)} />
+                                            </div>
                                         </div>
 
                                         <div className="textBlock flex flex-col text-white">

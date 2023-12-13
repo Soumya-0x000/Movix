@@ -6,14 +6,20 @@ import "./DetailsBanner.scss"
 import { useSelector } from 'react-redux';
 import Img from "../../../components/lazyLoadImage/Img"
 import PosterFallback from "../../../assets/no-poster.png"
+import Genres from "../../../components/genres/Genres"
+import CircleRating from "../../../components/circleRating/CircleRating"
+import {PlayIcon} from '../PlayBtn'
+import dayjs from 'dayjs';
 
 const DetailsBanner = () => {
     const { mediaType, id } = useParams();
     const { data, loading } = useFetch(`/${mediaType}/${id}`)
     const {url} = useSelector((state) => state.home)
 
+    const _genres = data?.genres?.map((g) => g.id)
+
     return (
-        <div className='detailsBanner w-full bg-black pt-[100px] mb-[50px] md:mb-0 md:pt-[120px] min-h-[700px] border'>
+        <div className='detailsBanner w-full bg-black pt-[100px] mb-[50px] md:mb-0 md:pt-[120px] min-h-[700px] '>
             {!loading ? (
                 <>
                     {!!data && (
@@ -24,13 +30,45 @@ const DetailsBanner = () => {
 
                             <div className="opacity-layer w-full h-[250px] absolute bottom-0 left-0"></div>
                             <ContentWrapper>
-                                <div className="content">
-                                    <div className="left">
+                                <div className="content flex relative flex-col gap-[25px] md:gap-[50px] md:flex-row ">
+                                    <div className="left flex-shrink-0 ">
                                         {data.poster_path ? (
-                                            <Img className={`posterImg`} src={url.backdrop + data.poster_path} />
+                                            <Img className={`posterImg w-full md:max-w-[350px] block rounded-xl h-full `} src={url.backdrop + data.poster_path} />
                                             ) : (
-                                            <Img className={`posterImg`} src={PosterFallback} />
+                                            <Img className={`posterImg w-full md:max-w-[350px] block rounded-xl h-full `} src={PosterFallback} />
                                         )}
+                                    </div>
+                                    <div className="right text-white ">
+                                        <div className="title text-[28px] md:text-[34px] leading-10 md:leading-[44px] ">
+                                            {`${
+                                                data?.name || data?.title
+                                            } (${dayjs(data?.release_date).format('YYYY')})`}
+                                        </div>
+                                        
+                                        <div className="subtitle text-[16px] md:text-[20px] md:leading-7 leading-6 mb-[15px] italic opacity-50 ">
+                                            {data?.tagline}
+                                        </div>
+                                       
+                                        <div className="genres flex flex-wrap mb-[20px]">
+                                            <Genres data={_genres} />
+                                        </div>
+                                        
+                                        <div className='row flex flex-row items-center gap-[25px] mb-[25px]'>
+                                            <CircleRating rating={data.vote_average.toFixed(1)} onPage={'details'} />
+                                            <div 
+                                            className="playbtn flex items-center gap-[20px] cursor-pointer"
+                                            onClick={() => {}}>
+                                                <PlayIcon/>
+                                                <span className="text ">Watch Trailer</span>
+                                            </div>
+                                        </div>
+                                       
+                                        <div className="overview mb-[25px] ">
+                                            <div className="heading text-[24px] mb-3 ">Overview</div>
+                                            <div className="description leading-[24px] md:pr-[100px] text-justify ">
+                                                {data.overview}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </ContentWrapper>
