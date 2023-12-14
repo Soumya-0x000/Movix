@@ -9,25 +9,13 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import CircleRating from '../circleRating/CircleRating'
 import Genres from '../genres/Genres'
+import { navigation } from '../navigationIcon/navigation'
 
-const Carousel = ({data, loading, endPointShowType}) => {
+const Carousel = ({data, loading, endPointShowType, title}) => {
     const carouselContainer = useRef()
     const { url } = useSelector((state) => state.home)
     const navigate = useNavigate()
-
-    const navigation = (dir) => {
-        const container = carouselContainer.current
-        
-        const scrollAmount = (dir === 'left')
-            ? container.scrollLeft - (container.offsetWidth + 20)
-            : container.scrollLeft + (container.offsetWidth + 20)
-
-        container.scrollTo({
-            left: scrollAmount,
-            behavior: 'smooth'
-        })
-    }
-
+    
     const skItem = () => {
         return (
             <div className="skeletonItem w-[125px] flex-shrink-0 ">
@@ -43,14 +31,15 @@ const Carousel = ({data, loading, endPointShowType}) => {
     return (
         <div className='carousel mb-[50px] '>
             <ContentWrapper>
+                {title && <div className="carouselTitle text-[24px] text-white mb-5 ">{title}</div>}
                 <div className='contentWrapper relative'>
                     <BsFillArrowLeftCircleFill
                         className='carouselLeftNav arrow text-3xl text-black absolute left-[10px] top-[44%] -translate-y-[50%] cursor-pointer opacity-60 hover:opacity-90 transition-all z-10 hidden md:block bg-green-300 rounded-full '
-                        onClick={() => navigation('left')}
+                        onClick={() => navigation({dir:'left', carouselContainer, pixels:20})}
                     />
                     <BsFillArrowRightCircleFill
                         className='carouselRightNav arrow text-3xl text-black absolute right-[10px] top-[44%] -translate-y-[50%] cursor-pointer opacity-60 hover:opacity-90 transition-all z-10 hidden md:block bg-green-300 rounded-full '
-                        onClick={() => navigation('right')}
+                        onClick={() => navigation({dir:'right', carouselContainer, pixels:20})}
                     />
                     {loading ? (
                         <div className='loadingSkeleton flex gap-x-[10px] md:gap-x-[20px] overflow-y-hidden md:overflow-hidden '>
@@ -65,19 +54,20 @@ const Carousel = ({data, loading, endPointShowType}) => {
                         <div 
                         className='carouselItems flex gap-[10px] overflow-y-hidden md:gap-[20px] md:overflow-hidden' 
                         ref = {carouselContainer}>
-                            {data?.map((item) => {
+                            {data?.map((item, index) => {
                                 const posterUrl = item.poster_path 
                                     ? url.poster + item.poster_path 
                                     : PosterFallback
                                 return (
                                     <div 
-                                    key={item.id}
+                                    key={index}
                                     className={`carouselItem w-[125px] cursor-pointer flex-shrink-0 `} 
                                     onClick={() => navigate(`/${item.media_type || endPointShowType}/${item.id}`)}>
                                         <div className="posterBlock relative w-full aspect-[1/1.5] bg-cover bg-center mb-[30px] flex items-end justify-between p-[10px]">
                                             <Img 
-                                            src={posterUrl} 
-                                            className={`w-full h-full object-cover object-center`} />
+                                                src={posterUrl} 
+                                                className={`w-full h-full object-cover object-center`} 
+                                            />
                                             <CircleRating rating={item.vote_average.toFixed(1)} onPage={'carousel'} />
                                             <div className='hidden md:flex'>
                                                 <Genres data={item.genre_ids.slice(0, 2)} onPage={'carousel'}/>

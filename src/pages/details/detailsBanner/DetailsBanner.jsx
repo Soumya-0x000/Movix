@@ -43,6 +43,7 @@ const DetailsBanner = ({videos, crew}) => {
                             </div>
 
                             <div className="opacity-layer w-full h-[250px] absolute bottom-0 left-0"></div>
+                            
                             <ContentWrapper>
                                 <div className="content flex relative flex-col gap-[25px] md:gap-[50px] md:flex-row ">
                                     <div className="left flex-shrink-0 ">
