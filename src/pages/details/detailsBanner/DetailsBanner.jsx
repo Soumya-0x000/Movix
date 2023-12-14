@@ -11,13 +11,23 @@ import CircleRating from "../../../components/circleRating/CircleRating"
 import {PlayIcon} from '../PlayBtn'
 import dayjs from 'dayjs';
 
-const DetailsBanner = () => {
+const DetailsBanner = ({videos, crew}) => {
     const { mediaType, id } = useParams();
     const { data, loading } = useFetch(`/${mediaType}/${id}`)
-    const {url} = useSelector((state) => state.home)
+
+    const { url } = useSelector((state) => state.home)
 
     const _genres = data?.genres?.map((g) => g.id)
 
+    const director = crew?.filter((f) => f.job === 'Director')
+    const writer = crew?.filter((f) => f.job === 'Story' || f.job === 'Screenplay' || f.job === 'Writer')
+
+    const toHoursAndMinutes = (totalMinutes) => {
+        const hours = Math.floor(totalMinutes / 60)
+        const minutes = (totalMinutes % 60)
+        return `${hours}h ${minutes > 0 ? `${minutes}m` : ''}`
+    }
+    console.log(writer);
     return (
         <div className='detailsBanner w-full bg-black pt-[100px] mb-[50px] md:mb-0 md:pt-[120px] min-h-[700px] '>
             {!loading ? (
@@ -38,6 +48,7 @@ const DetailsBanner = () => {
                                             <Img className={`posterImg w-full md:max-w-[350px] block rounded-xl h-full `} src={PosterFallback} />
                                         )}
                                     </div>
+
                                     <div className="right text-white ">
                                         <div className="title text-[28px] md:text-[34px] leading-10 md:leading-[44px] ">
                                             {`${
@@ -65,10 +76,124 @@ const DetailsBanner = () => {
                                        
                                         <div className="overview mb-[25px] ">
                                             <div className="heading text-[24px] mb-3 ">Overview</div>
-                                            <div className="description leading-[24px] md:pr-[100px] text-justify ">
+                                            <div className="description leading-[24px] md:pr-[10px] text-justify ">
                                                 {data.overview}
                                             </div>
                                         </div>
+
+                                        <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] `}>
+                                            {data?.status && (
+                                                <div className="infoItem mr-[10px] flex flex-wrap ">
+                                                    <span className="text bold font-bold opacity-100 mr-[10px] ">
+                                                        Status: {" "}
+                                                    </span>
+                                                    <span className="text opacity-50 leading-6 mr-[10px] ">
+                                                        {data.status}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {data?.release_date && (
+                                                <div className="infoItem flex flex-wrap mr-3 ">
+                                                    <span className="text bold font-bold opacity-100 mr-[10px] ">
+                                                        Release Date: {" "}
+                                                    </span>
+                                                    <span className="text opacity-50 leading-6 mr-[10px]">
+                                                        {dayjs(data.release_date).format('MMM DD, YYYY')}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {data?.runtime ? (
+                                                <div className="infoItem flex flex-wrap mr-3 ">
+                                                    <span className="text bold font-bold opacity-100 mr-[10px]">
+                                                        Runtime: {" "}
+                                                    </span>
+                                                    <span className="text opacity-50 leading-6 mr-[10px]">
+                                                        {toHoursAndMinutes(data.runtime)}
+                                                    </span>
+                                                </div>
+                                            ) : ''}
+                                        </div>
+                                        
+                                        <div className='flex flex-col sm:flex-row gap-x-6 border-b-[1px] border-b-[#ffffff25]'>
+                                            {data?.spoken_languages && (
+                                                <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] sm:border-none`}>
+                                                    <span className="text bold font-bold opacity-100 mr-[10px] ">
+                                                        Language: {" "}
+                                                    </span>
+                                                    <span className="text opacity-50 leading-6 mr-[10px] ">
+                                                        {data?.spoken_languages?.[0].english_name}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {data?.number_of_episodes > 0 && data?.number_of_seasons && (
+                                                <div className={`info flex py-4 `}>
+                                                    <div>
+                                                        <span className="text bold font-bold opacity-100 mr-[10px] ">
+                                                            Seasons: {" "}
+                                                        </span>
+                                                        <span className="text opacity-50 leading-6 mr-[10px] ">
+                                                            {data?.number_of_seasons}
+                                                        </span>
+                                                    </div>
+
+                                                    <div>
+                                                        <span className="text bold font-bold opacity-100 mr-[10px] ">
+                                                            Episodes: {" "}
+                                                        </span>
+                                                        <span className="text opacity-50 leading-6 mr-[10px] ">
+                                                            {data?.number_of_episodes}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                        {director?.length > 0 && (
+                                            <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] `}>
+                                                <span className="text bold font-bold opacity-100 mr-[10px] ">
+                                                    Director: {" "}
+                                                </span>
+                                                <span className="text opacity-50 leading-6 mr-[10px] ">
+                                                    {director?.map((item, index) => (
+                                                        <span key={index}>
+                                                            {item.name}
+                                                            {index !== director.length - 1 && ", "}
+                                                        </span>
+                                                    ))}
+                                                </span>
+                                            </div>
+                                        )}
+
+                                        {writer?.length > 0 && (
+                                            <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] `}>
+                                                <span className="text bold font-bold opacity-100 mr-[10px] ">
+                                                    Writer: {" "}
+                                                </span>
+                                                <span className="text opacity-50 leading-6 mr-[10px] ">
+                                                    {writer?.map((item, index) => (
+                                                        <span key={index}>
+                                                            {item.name}
+                                                            {index !== writer.length - 1 && ", "}
+                                                        </span>
+                                                    ))}
+                                                </span>
+                                            </div>
+                                        )}
+
+                                        {data?.created_by?.length > 0 && (
+                                            <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] `}>
+                                                <span className="text bold font-bold opacity-100 mr-[10px] ">
+                                                    Creator: {" "}
+                                                </span>
+                                                <span className="text opacity-50 leading-6 mr-[10px] ">
+                                                    {data?.created_by?.map((item, index) => (
+                                                        <span key={index}>
+                                                            {item.name}
+                                                            {index !== writer.length - 1 && ", "}
+                                                        </span>
+                                                    ))}
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </ContentWrapper>
