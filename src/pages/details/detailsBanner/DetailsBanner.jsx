@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useFetch from '../../../hooks/useFetch'
 import ContentWrapper from '../../../components/contentWrapper/ContentWrapper';
@@ -10,8 +10,12 @@ import Genres from "../../../components/genres/Genres"
 import CircleRating from "../../../components/circleRating/CircleRating"
 import {PlayIcon} from '../PlayBtn'
 import dayjs from 'dayjs';
+import VideoPopup from '../../../components/videoPopup/VideoPopup';
 
 const DetailsBanner = ({videos, crew}) => {
+    const [show, setShow] = useState(false)
+    const [videoId, setVideoId] = useState(null)
+
     const { mediaType, id } = useParams();
     const { data, loading } = useFetch(`/${mediaType}/${id}`)
 
@@ -27,7 +31,7 @@ const DetailsBanner = ({videos, crew}) => {
         const minutes = (totalMinutes % 60)
         return `${hours}h ${minutes > 0 ? `${minutes}m` : ''}`
     }
-    console.log(writer);
+
     return (
         <div className='detailsBanner w-full bg-black pt-[100px] mb-[50px] md:mb-0 md:pt-[120px] min-h-[700px] '>
             {!loading ? (
@@ -50,30 +54,38 @@ const DetailsBanner = ({videos, crew}) => {
                                     </div>
 
                                     <div className="right text-white ">
+                                        {/* Title */}
                                         <div className="title text-[28px] md:text-[34px] leading-10 md:leading-[44px] ">
                                             {`${
                                                 data?.name || data?.title
                                             } (${dayjs(data?.release_date).format('YYYY')})`}
                                         </div>
                                         
+                                        {/* Tagline */}
                                         <div className="subtitle text-[16px] md:text-[20px] md:leading-7 leading-6 mb-[15px] italic opacity-50 ">
                                             {data?.tagline}
                                         </div>
                                        
+                                        {/* Genres */}
                                         <div className="genres flex flex-wrap mb-[20px]">
-                                            <Genres data={_genres} />
+                                            <Genres data={_genres} onPage={'details'} />
                                         </div>
                                         
+                                        {/* Rating & Trailer */}
                                         <div className='row flex flex-row items-center gap-[25px] mb-[25px]'>
                                             <CircleRating rating={data.vote_average.toFixed(1)} onPage={'details'} />
                                             <div 
                                             className="playbtn flex items-center gap-[20px] cursor-pointer"
-                                            onClick={() => {}}>
+                                            onClick={() => {
+                                                setShow(true)
+                                                setVideoId(videos?.key)
+                                            }}>
                                                 <PlayIcon/>
                                                 <span className="text ">Watch Trailer</span>
                                             </div>
                                         </div>
                                        
+                                        {/* Overview */}
                                         <div className="overview mb-[25px] ">
                                             <div className="heading text-[24px] mb-3 ">Overview</div>
                                             <div className="description leading-[24px] md:pr-[10px] text-justify ">
@@ -81,6 +93,7 @@ const DetailsBanner = ({videos, crew}) => {
                                             </div>
                                         </div>
 
+                                        {/* Status, Release date, Runtime */}
                                         <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] `}>
                                             {data?.status && (
                                                 <div className="infoItem mr-[10px] flex flex-wrap ">
@@ -114,6 +127,7 @@ const DetailsBanner = ({videos, crew}) => {
                                             ) : ''}
                                         </div>
                                         
+                                        {/* Language */}
                                         <div className='flex flex-col sm:flex-row gap-x-6 border-b-[1px] border-b-[#ffffff25]'>
                                             {data?.spoken_languages && (
                                                 <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] sm:border-none`}>
@@ -147,6 +161,8 @@ const DetailsBanner = ({videos, crew}) => {
                                                 </div>
                                             )}
                                         </div>
+
+                                        {/* Director */}
                                         {director?.length > 0 && (
                                             <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] `}>
                                                 <span className="text bold font-bold opacity-100 mr-[10px] ">
@@ -163,6 +179,7 @@ const DetailsBanner = ({videos, crew}) => {
                                             </div>
                                         )}
 
+                                        {/* Writer */}
                                         {writer?.length > 0 && (
                                             <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] `}>
                                                 <span className="text bold font-bold opacity-100 mr-[10px] ">
@@ -179,6 +196,7 @@ const DetailsBanner = ({videos, crew}) => {
                                             </div>
                                         )}
 
+                                        {/* Created by */}
                                         {data?.created_by?.length > 0 && (
                                             <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] `}>
                                                 <span className="text bold font-bold opacity-100 mr-[10px] ">
@@ -188,7 +206,7 @@ const DetailsBanner = ({videos, crew}) => {
                                                     {data?.created_by?.map((item, index) => (
                                                         <span key={index}>
                                                             {item.name}
-                                                            {index !== writer.length - 1 && ", "}
+                                                            {index !== writer?.length - 1 && ", "}
                                                         </span>
                                                     ))}
                                                 </span>
@@ -196,6 +214,12 @@ const DetailsBanner = ({videos, crew}) => {
                                         )}
                                     </div>
                                 </div>
+                                <VideoPopup
+                                    show={show}
+                                    setShow={setShow}
+                                    videoId={videoId}
+                                    setVideoId={setVideoId}
+                                />
                             </ContentWrapper>
                         </React.Fragment>
                     )}
