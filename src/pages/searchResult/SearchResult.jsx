@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import './SearchResult.scss'
 import { fetchDataFromApi } from '../../utils/api'
 import ContentWrapper from '../../components/contentWrapper/ContentWrapper'
 import noResults from '../../assets/no-results.png'
@@ -33,9 +32,9 @@ const SearchResult = () => {
             setPageNum((prev) => prev + 1)
         })
     }
-    console.log(data?.results);
 
     useEffect(() => {
+        setPageNum(1)
         fetchInitialData()
     }, [query])
 
@@ -52,12 +51,11 @@ const SearchResult = () => {
                             </div>
 
                             <InfiniteScroll
-                                className='content'
-                                dataLength={data?.results?.length || []}
-                                next={fetchNextPageData}
-                                hasMore={pageNum <= data?.total_pages}
-                                loader={<Spinner/>}
-                            >
+                            className='content flex flex-wrap gap-[10px] md:gap-5'
+                            dataLength={data?.results?.length || []}
+                            next={fetchNextPageData}
+                            hasMore={pageNum <= data?.total_pages}
+                            loader={<Spinner/>}>
                                 {data?.results?.map((item, index) => {
                                     if(item.media_type === 'person') return 
                                     return (
@@ -71,9 +69,9 @@ const SearchResult = () => {
                             </InfiniteScroll>
                         </>
                     ) : (
-                        <span className='text-[24px] text-slate-400'>
-                            Sorry, no results found!🙃
-                        </span>
+                        <div className='lg:text-[70px] mt-[200px] text-slate-400 h-full w-full flex items-center justify-center'>
+                            Sorry, no result found!🙃🙃
+                        </div>
                     )}
                 </ContentWrapper>
             )}

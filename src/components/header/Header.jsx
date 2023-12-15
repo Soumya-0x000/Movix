@@ -87,7 +87,7 @@ const Header = () => {
     }
 
     return (
-        <header className={`header fixed translate-y-0 w-full h-[60px] z-10 flex items-center text-white ${mobileMenu ? 'bg-[#020c1b]' : 'bg-[#00000040]'} transition-all ease-in-out backdrop-blur-[3px] ${show}`}>
+        <header className={`header z-50 fixed translate-y-0 w-full h-[60px] flex items-center text-white ${mobileMenu ? 'bg-[#020c1b]' : 'bg-[#00000040]'} transition-all ease-in-out backdrop-blur-[3px] ${show}`}>
             <ContentWrapper>
                 <div className='flex items-center justify-between'>
                     <div className='logo' onClick={() => navigate('/')}>
