@@ -22,7 +22,7 @@ const Cast = ({data, loading}) => {
 
     return (
         <>
-            {data?.results?.length > 0 && (
+            {data?.length > 0 && (
                 <div className='castSection relative mb-[50px] '>
                     <ContentWrapper>
                         <div className="sectionHeading flex items-center justify-between mr-3 mt-6 text-[24px] text-white mb-[25px] ">
