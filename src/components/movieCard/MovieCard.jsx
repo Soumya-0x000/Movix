@@ -17,11 +17,11 @@ const MovieCard = ({key, data, fromSearch}) => {
         <div 
         className='movieCard mb-6 cursor-pointer flex-shrink-0 '
         onClick={() => navigate(`/${data.media_type || media_type}/${data.id}`)}>
-            <div className="posterBlock relative w-full aspect-[1/1.5] bg-cover bg-center mb-[10px] sm:mb-[30px] flex items-end justify-between p-[0px] transition-all duration-500 hover:opacity-50">
+            <div className="posterBlock relative w-full aspect-[1/1.5] bg-cover bg-center mb-[20px] sm:mb-[30px] flex items-end justify-between p-[0px] transition-all duration-500 hover:opacity-50">
                 <Img src={posterUrl} className={`posterImg w-full h-full object-cover object-center`} />
                 {fromSearch && (
                     <>
-                        <div className='absolute left-3 hidden sm:block z-20 '>
+                        <div className='absolute hidden xsm:block left-3 bottom-2 z-20 '>
                             <CircleRating rating={data.vote_average.toFixed(1)} onPage='searchResult'/>
                         </div>
                         <div className='z-10 absolute right-2 bottom-2 w-[70%] hidden sm:block '>

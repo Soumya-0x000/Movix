@@ -6,6 +6,7 @@ import noResults from '../../assets/no-results.png'
 import { useParams } from 'react-router-dom'
 import Spinner from '../../components/spinner/Spinner'
 import MovieCard from '../../components/movieCard/MovieCard'
+import Img from '../../components/lazyLoadImage/Img'
 
 const SearchResult = () => {
     const [data, setData] = useState(null)
@@ -51,7 +52,7 @@ const SearchResult = () => {
                             </div>
 
                             <InfiniteScroll
-                            className='content flex flex-wrap gap-[10px] md:gap-5'
+                            className='content flex flex-wrap justify-between md:gap-5'
                             dataLength={data?.results?.length || []}
                             next={fetchNextPageData}
                             hasMore={pageNum <= data?.total_pages}
@@ -69,8 +70,11 @@ const SearchResult = () => {
                             </InfiniteScroll>
                         </>
                     ) : (
-                        <div className='lg:text-[70px] mt-[200px] text-slate-400 h-full w-full flex items-center justify-center'>
-                            Sorry, no result found!🙃🙃
+                        <div className='flex flex-col items-center justify-center'>
+                            <Img className={`w-[400px]`} src={noResults}/>
+                            <div className='text-[18px] sm:text-[28px] md:text-[40px] text-slate-400 '>
+                                Sorry, no result found for '{query}'!🙃
+                            </div>
                         </div>
                     )}
                 </ContentWrapper>

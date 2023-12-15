@@ -129,6 +129,7 @@ const Header = () => {
                                 onChange={(e) => setQuery(e.target.value)}
                                 onKeyUp={searchQueryHandler}
                                 className='w-full text-black h-full pl-3 border-none outline-none text-lg'
+                                autoFocus='true'
                             />
                             <VscChromeClose 
                                 onClick={() => setShowSearch(false)}

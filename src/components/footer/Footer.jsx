@@ -32,7 +32,7 @@ const Footer = () => {
                 <div className='text-white text-sm md:text-[16px] flex flex-col items-center justify-center gap-y-10'>
                     <div className='flex gap-x-5 md:gap-x-8'>
                         {footerContent.map((item, index) => (
-                            <div className='footerButton hover:text-pink hover:ring-2 hover:ring-pink hover:rounded-full hover:px-1 md:hover:px-2 transition-all cursor-pointer'
+                            <div className='footerButton hover:text-pink sm:hover:ring-2 hover:ring-pink hover:rounded-full sm:hover:px-1 md:hover:px-2 transition-all cursor-pointer'
                             key={index}>
                                 {item.title}
                             </div>

@@ -19,6 +19,9 @@ export default {
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
       },
+      screens: {
+        'xsm': '330px',
+      },
     },
   },
   plugins: [],
