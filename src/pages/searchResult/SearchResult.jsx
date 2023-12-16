@@ -16,7 +16,7 @@ const SearchResult = () => {
     
     const fetchInitialData = () => {
         setLoading(true)
-        fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}`).then((res) => {
+        fetchDataFromApi(`/search/multi?query=${query}&page=1`).then((res) => {
             setData(res)
             setPageNum((prev) => prev + 1)
             setLoading(false)
@@ -33,7 +33,7 @@ const SearchResult = () => {
             setPageNum((prev) => prev + 1)
         })
     }
-
+    
     useEffect(() => {
         setPageNum(1)
         fetchInitialData()
@@ -48,17 +48,17 @@ const SearchResult = () => {
                     {data?.results?.length > 0 ? (
                         <>
                             <div className="pageTitle text-[24px] leading-[34px] text-white mb-6">
-                                {`Search ${data?.total_results > 1 ? 'results' : 'result'} of '${query}'`}
+                                {`Search ${data?.total_results > 1 ? 'results' : 'result'} of '${query}'` } ({data?.total_results})
                             </div>
 
                             <InfiniteScroll
-                            className='content flex flex-wrap justify-between md:gap-5'
+                            className='content flex flex-wrap gap-[10px] md:gap-5'
                             dataLength={data?.results?.length || []}
                             next={fetchNextPageData}
                             hasMore={pageNum <= data?.total_pages}
                             loader={<Spinner/>}>
                                 {data?.results?.map((item, index) => {
-                                    if(item.media_type === 'person') return 
+                                    if(item.media_type === 'person') return
                                     return (
                                         <MovieCard 
                                             key={index} 
@@ -72,6 +72,7 @@ const SearchResult = () => {
                     ) : (
                         <div className='flex flex-col items-center justify-center'>
                             <Img className={`w-[400px]`} src={noResults}/>
+                            
                             <div className='text-[18px] sm:text-[28px] md:text-[40px] text-slate-400 '>
                                 Sorry, no result found for '{query}'!🙃
                             </div>

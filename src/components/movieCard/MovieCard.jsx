@@ -8,21 +8,22 @@ import CircleRating from '../circleRating/CircleRating'
 import Genres from '../genres/Genres'
 import dayjs from 'dayjs'
 
-const MovieCard = ({key, data, fromSearch}) => {
+const MovieCard = ({data, fromSearch}) => {
     const { url } = useSelector((state) => state.home)
     const navigate = useNavigate()
     const posterUrl = data.poster_path ? url.poster + data.poster_path : PosterFallBack
+    // console.log(media_type);
 
     return (
         <div 
         className='movieCard mb-6 cursor-pointer flex-shrink-0 '
-        onClick={() => navigate(`/${data.media_type || media_type}/${data.id}`)}>
+        onClick={() => navigate(`/${data?.media_type}/${data?.id}`)}>
             <div className="posterBlock relative w-full aspect-[1/1.5] bg-cover bg-center mb-[20px] sm:mb-[30px] flex items-end justify-between p-[0px] transition-all duration-500 hover:opacity-50">
                 <Img src={posterUrl} className={`posterImg w-full h-full object-cover object-center`} />
                 {fromSearch && (
                     <>
                         <div className='absolute hidden xsm:block left-3 bottom-2 z-20 '>
-                            <CircleRating rating={data.vote_average.toFixed(1)} onPage='searchResult'/>
+                            <CircleRating rating={data?.vote_average?.toFixed(1)} onPage='searchResult'/>
                         </div>
                         <div className='z-10 absolute right-2 bottom-2 w-[70%] hidden sm:block '>
                             <Genres data={data?.genre_ids?.slice(0,2)} onPage='searchResult'/>
