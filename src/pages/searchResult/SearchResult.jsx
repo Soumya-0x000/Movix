@@ -63,7 +63,6 @@ const SearchResult = () => {
                                         <MovieCard 
                                             key={index} 
                                             data={item} 
-                                            fromSearch={true}
                                         />
                                     )
                                 })}

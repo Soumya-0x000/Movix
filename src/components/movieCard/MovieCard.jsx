@@ -8,16 +8,15 @@ import CircleRating from '../circleRating/CircleRating'
 import Genres from '../genres/Genres'
 import dayjs from 'dayjs'
 
-const MovieCard = ({data, fromSearch}) => {
+const MovieCard = ({data, mediaType}) => {
     const { url } = useSelector((state) => state.home)
     const navigate = useNavigate()
     const posterUrl = data.poster_path ? url.poster + data.poster_path : PosterFallBack
-    // console.log(media_type);
 
     return (
         <div 
         className='movieCard mb-6 cursor-pointer flex-shrink-0 '
-        onClick={() => navigate(`/${data?.media_type}/${data?.id}`)}>
+        onClick={() => navigate(`/${data?.media_type || mediaType}/${data?.id}`)}>
             <div className="posterBlock relative w-full aspect-[1/1.5] bg-cover bg-center mb-[20px] sm:mb-[30px] flex items-end justify-between p-[0px] transition-all duration-500 hover:opacity-50">
                 <Img src={posterUrl} className={`posterImg w-full h-full object-cover object-center`} />
                 <div className='absolute hidden xsm:block left-3 bottom-2 z-20 '>
