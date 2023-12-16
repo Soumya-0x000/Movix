@@ -21,6 +21,7 @@ export default {
       },
       screens: {
         'xsm': '330px',
+        'mbl': '400px',
       },
     },
   },

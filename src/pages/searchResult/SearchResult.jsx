@@ -16,7 +16,7 @@ const SearchResult = () => {
     
     const fetchInitialData = () => {
         setLoading(true)
-        fetchDataFromApi(`/search/multi?query=${query}&page=1`).then((res) => {
+        fetchDataFromApi(`/search/multi?query=${query}`).then((res) => {
             setData(res)
             setPageNum((prev) => prev + 1)
             setLoading(false)
@@ -48,7 +48,7 @@ const SearchResult = () => {
                     {data?.results?.length > 0 ? (
                         <>
                             <div className="pageTitle text-[24px] leading-[34px] text-white mb-6">
-                                {`Search ${data?.total_results > 1 ? 'results' : 'result'} of '${query}'` } ({data?.total_results})
+                                {`Search ${data?.total_results > 1 ? 'results' : 'result'} for '${query}'`}
                             </div>
 
                             <InfiniteScroll
@@ -63,7 +63,7 @@ const SearchResult = () => {
                                         <MovieCard 
                                             key={index} 
                                             data={item} 
-                                            fromSearch={true} 
+                                            fromSearch={true}
                                         />
                                     )
                                 })}
