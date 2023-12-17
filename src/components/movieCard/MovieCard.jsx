@@ -22,7 +22,7 @@ const MovieCard = ({data, mediaType}) => {
                 <div className='absolute hidden xsm:block left-3 bottom-2 z-20 '>
                     <CircleRating rating={data?.vote_average?.toFixed(1)} onPage='searchResult'/>
                 </div>
-                <div className='z-10 absolute right-2 bottom-2 w-[70%] hidden mbl:block '>
+                <div className='z-10 absolute right-2 bottom-2 w-[70%] lg:w-[65%] hidden mbl:block '>
                     <Genres data={data?.genre_ids?.slice(0,2)} onPage='searchResult'/>
                 </div>
             </div>

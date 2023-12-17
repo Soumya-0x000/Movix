@@ -7,17 +7,36 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import noResults from '../../assets/no-results.png'
 import MovieCard from '../../components/movieCard/MovieCard'
 import Img from '../../components/lazyLoadImage/Img'
+import Select from 'react-select'
+import useFetch from '../../hooks/useFetch'
 import './Explore.scss'
+
+let filters = {}
+
+const sortByData = [
+    {value: 'popularity.desc', label: 'Popularity Descending'},
+    {value: 'popularity.asc', label: 'Popularity Ascending'},
+    {value: 'vote_average.desc', label: 'Rating Descending'},
+    {value: 'vote_average.asc', label: 'Rating Ascending'},
+    {value: 'primary_release_date.desc', label: 'Release Date Descending'},
+    {value: 'primary_release_date.asc', label: 'Release Date Ascending'},
+    {value: 'original_title.asc', label: 'Title (A-Z)'},
+    {value: 'original_title.desc', label: 'Title (Z-A)'},
+]
 
 const Explore = () => {
     const [data, setData] = useState(null)
     const [pageNum, setPageNum] = useState(1)
     const [loading, setLoading] = useState(false)
+    const [genre, setGenre] = useState(null)
+    const [sortBy, setSortBy] = useState(null)
     const {mediaType} = useParams()
+
+    const { data: genresData } = useFetch(`/genre/${mediaType}/list`)
 
     const fetchInitialData = () => {
         setLoading(true)
-        fetchDataFromApi(`/discover/${mediaType}`).then((res) => {
+        fetchDataFromApi(`/discover/${mediaType}`, filters).then((res) => {
             setLoading(false)
             setData(res)
             setPageNum((prev) => prev + 1)
@@ -25,24 +44,54 @@ const Explore = () => {
     }
 
     const fetchNextPageData = () => {
-        fetchDataFromApi(`/discover/${mediaType}?page=${pageNum}`).then((res) => {
+        fetchDataFromApi(`/discover/${mediaType}?page=${pageNum}`, filters).then((res) => {
             if(data?.results) {
-                setData({...data, results: [...data.results, ...res.results]})            } else {
+                setData({...data, results: [...data.results, ...res.results]}) 
+            } else {
                 setData(res)
             }
             setPageNum((prev) => prev + 1)
         })
     }
 
-    useEffect(() => {
+    const handleFilterOptions = (selectedItems, action) => {
+        if (action.name === 'sortBy') {
+            setSortBy(selectedItems)
+            if (action.action === 'clear') {
+                delete filters.sort_by
+            } else {
+                filters.sort_by = selectedItems.value
+            }
+        }
+
+        if (action.name === 'genres') {
+            setGenre(selectedItems)
+            if (action.action === 'clear') {
+                delete filters.with_genres
+            } else {
+                let genreId = selectedItems.map((items) => items.id)
+                genreId = JSON.stringify(genreId).slice(1, -1)
+                filters.with_genres = genreId
+            }
+        }
+
         setPageNum(1)
+        fetchInitialData()
+    }
+
+    useEffect(() => {
+        filters = {}
+        setData(null)
+        setPageNum(1)
+        setGenre(null)
+        setSortBy(null)
         fetchInitialData()
     }, [mediaType])
 
     return (
         <div className='explorePage min-h-[700px] pt-[100px]'>
             <ContentWrapper>
-                <div className="pageHeader flex mb-6 flex-col md:flow-row justify-between">
+                <div className="pageHeader flex mb-6 flex-col md:flex-row justify-between">
                     <div className="pageTitle text-white text-[24px] leading-[34px] mb-5 md:mb-0 ">
                         Explore {mediaType === 'tv' ? (
                             'TV Shows'
@@ -50,8 +99,31 @@ const Explore = () => {
                             'Movies'
                         )}
                     </div>
-                    <div className="filters">
 
+                    <div className="filters flex flex-col md:flex-row gap-x-4 gap-y-3 ">
+                        <Select
+                            isMulti
+                            name='genres'
+                            value={genre}
+                            closeMenuOnSelect={false}
+                            options={genresData?.genres}
+                            getOptionLabel={(option) => option.name}
+                            getOptionValue={(option) => option.id}
+                            onChange={handleFilterOptions}
+                            placeholder='Select Genres'
+                            className='react-select-container genresDD'
+                            classNamePrefix='react-select'
+                        />
+                        <Select
+                            name='sortBy'
+                            value={sortBy}
+                            options={sortByData}
+                            onChange={handleFilterOptions}
+                            isClearable={true}
+                            placeholder='Sort by'
+                            className='react-select-container sortByDD'
+                            classNamePrefix='react-select'
+                        />
                     </div>
                 </div>
 

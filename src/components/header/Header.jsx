@@ -97,19 +97,19 @@ const Header = () => {
                     <div className='menuItems list-none hidden md:flex flex-row-reverse sm:flex-row gap-x-6 items-center'>
                         {navigationContent('row')}
                         <div className='menuItem hover:text-pink text-[1.2rem] '>
-                            <HiOutlineSearch onClick={openSearch}/>
+                            <HiOutlineSearch onClick={openSearch} className='cursor-pointer'/>
                         </div>
                     </div>
 
                     <div className='mobileMenuItems flex gap-x-4 items-center justify-center text-lg md:hidden'>
-                        <HiOutlineSearch  onClick={openSearch}/>
+                        <HiOutlineSearch  onClick={openSearch} className='cursor-pointer'/>
                         {!mobileMenu ? (
                             <SlMenu 
-                            className='md:hidden'
+                            className='md:hidden cursor-pointer'
                             onClick={openMobileMenu}/>
                         ) : (
                             <>
-                                <VscChromeClose onClick={() => setMobileMenu(!mobileMenu)}/>
+                                <VscChromeClose onClick={() => setMobileMenu(!mobileMenu)} className='cursor-pointer'/>
                                 <div className='mobileMenuItem bg-black absolute left-0 top-[60px] w-full '>
                                     {navigationContent('col')}
                                 </div>
@@ -133,7 +133,7 @@ const Header = () => {
                             />
                             <VscChromeClose 
                                 onClick={() => setShowSearch(false)}
-                                className='text-black bg-white h-full w-7 '
+                                className='text-black bg-white h-full w-7 cursor-pointer '
                             />
                         </div>
                     </ContentWrapper>
