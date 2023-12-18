@@ -16,7 +16,7 @@ const SearchResult = () => {
     
     const fetchInitialData = () => {
         setLoading(true)
-        fetchDataFromApi(`/search/multi?query=${query}`).then((res) => {
+        fetchDataFromApi(`/search/multi?query=${query}&include_adult=true`).then((res) => {
             setData(res)
             setPageNum((prev) => prev + 1)
             setLoading(false)
@@ -24,7 +24,7 @@ const SearchResult = () => {
     }
 
     const fetchNextPageData = () => {
-        fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}`).then((res) => {
+        fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}&include_adult=true`).then((res) => {
             if(data?.results) {
                 setData({...data, results: [...data.results, ...res.results]})
             } else {
