@@ -36,7 +36,7 @@ const Explore = () => {
 
     const fetchInitialData = () => {
         setLoading(true)
-        fetchDataFromApi(`/discover/${mediaType}`, filters).then((res) => {
+        fetchDataFromApi(`/discover/${mediaType}?include_adult=true`, filters).then((res) => {
             setLoading(false)
             setData(res)
             setPageNum((prev) => prev + 1)
@@ -44,7 +44,7 @@ const Explore = () => {
     }
 
     const fetchNextPageData = () => {
-        fetchDataFromApi(`/discover/${mediaType}?page=${pageNum}`, filters).then((res) => {
+        fetchDataFromApi(`/discover/${mediaType}?include_adult=true&page=${pageNum}`, filters).then((res) => {
             if(data?.results) {
                 setData({...data, results: [...data.results, ...res.results]}) 
             } else {
@@ -89,7 +89,7 @@ const Explore = () => {
     }, [mediaType])
 
     return (
-        <div className='explorePage min-h-[700px] pt-[100px]'>
+        <div className='explorePage min-h-[700px] pt-[85px]'>
             <ContentWrapper>
                 <div className="pageHeader flex mb-6 flex-col md:flex-row justify-between">
                     <div className="pageTitle text-white text-[24px] leading-[34px] mb-5 md:mb-0 ">
