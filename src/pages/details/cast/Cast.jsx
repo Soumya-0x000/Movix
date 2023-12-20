@@ -29,7 +29,7 @@ const Cast = ({data, loading}) => {
                             <span>Top Cast</span>
                             <div className='gap-x-2 hidden md:flex'>
                                 <BsFillArrowLeftCircleFill 
-                                    className='cursor-pointer text-green-300' 
+                                    className='cursor-pointer text-green-300 ' 
                                     onClick={() => navigation({dir:'left', carouselContainer:castContainer, pixels:10})}
                                 />
                                 <BsFillArrowRightCircleFill 
