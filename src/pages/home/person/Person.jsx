@@ -26,11 +26,11 @@ const Person = () => {
                     </span>
                     <div className='gap-x-2 hidden md:flex absolute right-6'>
                         <BsFillArrowLeftCircleFill 
-                            className='cursor-pointer text-green-300' 
+                            className='cursor-pointer text-green-300 w-7 h-7' 
                             onClick={() => navigation({dir:'left', carouselContainer:containerRef, pixels:10})}
                         />
                         <BsFillArrowRightCircleFill 
-                            className='cursor-pointer text-green-300' 
+                            className='cursor-pointer text-green-300 w-7 h-7' 
                             onClick={() => navigation({dir:'right', carouselContainer:containerRef, pixels:10})}
                         />
                     </div>
