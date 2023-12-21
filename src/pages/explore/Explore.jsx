@@ -36,6 +36,7 @@ const Explore = () => {
 
     const fetchInitialData = () => {
         setLoading(true)
+
         fetchDataFromApi(`/discover/${mediaType}?include_adult=true`, filters).then((res) => {
             setLoading(false)
             setData(res)
@@ -94,10 +95,10 @@ const Explore = () => {
                 <div className="pageHeader flex mb-6 flex-col md:flex-row justify-between">
                     <div className="pageTitle text-white text-[24px] leading-[34px] mb-5 md:mb-0 ">
                         Explore {mediaType === 'tv' ? (
-                            'TV Shows'
-                        ) : (
-                            'Movies'
-                        )}
+                                'TV Shows'
+                            ) : (
+                                'Movies'
+                            )}
                     </div>
 
                     <div className="filters flex flex-col md:flex-row gap-x-4 gap-y-3 ">
@@ -155,7 +156,7 @@ const Explore = () => {
                                     <Img className={`w-[400px]`} src={noResults}/>
                                     
                                     <div className='text-[18px] sm:text-[28px] md:text-[40px] text-slate-400 '>
-                                        Sorry, no result found for !🙃
+                                        Sorry, no result found !🙃
                                     </div>
                                 </div>
                             </>

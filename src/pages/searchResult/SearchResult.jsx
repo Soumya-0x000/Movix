@@ -7,8 +7,10 @@ import { useParams } from 'react-router-dom'
 import Spinner from '../../components/spinner/Spinner'
 import MovieCard from '../../components/movieCard/MovieCard'
 import Img from '../../components/lazyLoadImage/Img'
+import SwitchTabs from '../../components/switchTabs/SwitchTabs'
 
 const SearchResult = () => {
+    const [endPointShowType, setEndPointShowType] = useState('multi')
     const [data, setData] = useState(null)
     const [pageNum, setPageNum] = useState(1)
     const [loading, setLoading] = useState(false)
@@ -16,7 +18,7 @@ const SearchResult = () => {
     
     const fetchInitialData = () => {
         setLoading(true)
-        fetchDataFromApi(`/search/multi?query=${query}&include_adult=true`).then((res) => {
+        fetchDataFromApi(`/search/${endPointShowType}?query=${query}&include_adult=true`).then((res) => {
             setData(res)
             setPageNum((prev) => prev + 1)
             setLoading(false)
@@ -24,7 +26,7 @@ const SearchResult = () => {
     }
 
     const fetchNextPageData = () => {
-        fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}&include_adult=true`).then((res) => {
+        fetchDataFromApi(`/search/${endPointShowType}?query=${query}&page=${pageNum}&include_adult=true`).then((res) => {
             if(data?.results) {
                 setData({...data, results: [...data.results, ...res.results]})
             } else {
@@ -34,21 +36,38 @@ const SearchResult = () => {
         })
     }
     
+    const onTabChangeShowType = (tab) => {
+        if (tab === 'Movie') {
+            setEndPointShowType('movie')
+        } else if (tab === 'TV Shows') {
+            setEndPointShowType('tv')
+        } else if (tab === 'Person') {
+            setEndPointShowType('person')
+        } else {
+            setEndPointShowType('multi')
+        }
+    }
+
     useEffect(() => {
         setPageNum(1)
         fetchInitialData()
     }, [query])
 
     return (
-        <div className='searchResultsPage min-h-[700px] pt-[100px]'>
+        <div className='searchResultsPage min-h-[700px] pt-[80px]'>
             {loading ? (
                 <Spinner initial={true} />
             ) : (
                 <ContentWrapper>
                     {data?.results?.length > 0 ? (
                         <>
-                            <div className="pageTitle text-[24px] leading-[34px] text-white mb-6">
-                                {`Search ${data?.total_results > 1 ? 'results' : 'result'} for '${query}'`}
+                            <div className="pageTitle text-[24px] leading-[34px] text-white mb-6 flex flex-col gap-y-3 md:flex-row items-center justify-between">
+                                <div>
+                                    {`Search ${data?.total_results > 1 ? 'results' : 'result'} for '${query}'`}
+                                </div>
+                                <div>
+                                    <SwitchTabs data={['All', 'Movie', 'TV Shows', 'Person']} onTabChange={onTabChangeShowType} size='80px'/>
+                                </div>
                             </div>
 
                             <InfiniteScroll
@@ -58,11 +77,11 @@ const SearchResult = () => {
                             hasMore={pageNum <= data?.total_pages}
                             loader={<Spinner/>}>
                                 {data?.results?.map((item, index) => {
-                                    if(item.media_type === 'person') return
                                     return (
                                         <MovieCard 
                                             key={index} 
                                             data={item} 
+                                            mediaType={item.media_type}
                                         />
                                     )
                                 })}

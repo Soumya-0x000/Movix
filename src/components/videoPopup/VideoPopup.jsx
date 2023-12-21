@@ -32,7 +32,9 @@ const VideoPopup = ({show, setShow, videoId, setVideoId}) => {
                         </>
 
                     ) : (
-                        <span className='text-white text-6xl h-[200px] flex items-center justify-center opacity-100'>Nothing to watch</span>
+                        <span className='text-white text-xl md:text-6xl h-[200px] flex items-center justify-center opacity-100'>
+                            Nothing to watch
+                        </span>
                     )}
                 </div> 
             

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import './switchTab.scss'
 
-const SwitchTabs = ({ data, onTabChange }) => {
+const SwitchTabs = ({ data, onTabChange, size }) => {
     const [selectedTab, setSelectedTab] = useState(0)
     const [left, setLeft] = useState(0)
 
     const activeTab = (tab, index) => {
-        setLeft(index * 100)
+        setLeft(index * parseInt(size))
         setTimeout(() => {
             setSelectedTab(index)
         }, 300);
@@ -19,13 +19,13 @@ const SwitchTabs = ({ data, onTabChange }) => {
                 {data.map((tab, index) => (
                     <span 
                     key={index} 
-                    className={`tabItem ${selectedTab === index ? 'active' : ''}  h-full flex items-center justify-center w-[100px] text-black text-[14px] relative z-10 cursor-pointer `}
+                    className={`tabItem ${selectedTab === index ? 'active' : ''}  h-full flex items-center justify-center w-[${size}] text-black text-[14px] relative z-10 cursor-pointer `}
                     onClick={() => activeTab(tab, index)}>
                         {tab}
                     </span>
                 ))}
                 <span 
-                    className='movingBg h-[30px] w-[100px] rounded-full absolute left-0 bg-gradient-to-r from-orange to-pink ' 
+                    className={`movingBg h-[30px] w-[${size}] rounded-full absolute left-0 bg-gradient-to-r from-orange to-pink `} 
                     style={{left}} 
                 />
             </div>

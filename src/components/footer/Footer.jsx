@@ -3,7 +3,6 @@ import ContentWrapper from '../contentWrapper/ContentWrapper'
 import {
     FaFacebookF,
     FaInstagram,
-    FaTwitter,
     FaLinkedin,
     FaGithub
 } from "react-icons/fa";
@@ -39,7 +38,7 @@ const Footer = () => {
                         ))}
                     </div>
                     
-                    <div className='text-slate-400 text-center px-[1rem] lg:px-0 w-full md:max-w-[800px] lg:max-w-[1200px] leading-[22px] '>
+                    <div className='text-slate-400 text-justify px-[1rem] lg:px-0 w-full md:max-w-[800px] lg:max-w-[1200px] leading-[22px] '>
                         Passionate frontend developer skilled in HTML5, CSS, and JavaScript, with expertise in React JS for building scalable and interactive user interfaces. Proficient in Tailwind CSS for efficient styling and Redux Toolkit for state management in large-scale applications. Experienced in integrating Firebase for versatile backend functionalities. Adept at collaborative development using Git and GitHub. Dedicated to crafting visually appealing and responsive web experiences.
                     </div>
                     

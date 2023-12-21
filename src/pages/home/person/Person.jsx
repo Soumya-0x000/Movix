@@ -8,30 +8,36 @@ import {BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill} from 'react-icons
 import {navigation} from '../../../components/navigationIcon/navigation'
 
 const Person = () => {
-    const { data, loading } = useFetch(`/person/changes`)
     const { data: personData, loading: isPersonLoading } = useFetch(`/person/popular`)
     const { url } = useSelector((state) => state.home)
     const containerRef = useRef()
 
-    // console.log(data);
-    console.log(personData);
-    console.log(url?.poster);
+    const skeleton = () => {
+        return (
+            <div className="skItem">
+                <div className="skeleton w-[125px] md:w-[175px] h-[125px] md:h-[175px] rounded-full mb-4 "></div>
+                <div className="skeleton w-full h-5 rounded-full mb-3"></div>
+                <div className="skeleton w-2/4 h-5 rounded-full mx-auto"></div>
+            </div>
+        )
+    }
 
     return (
-        <div>
+        <div className='mb-9'>
             <ContentWrapper>
                 <div className='flex items-center justify-between mb-[20px] relative '>
                     <span className='text-[24px] text-white font-medium'>
                         Popular Person
                     </span>
+
                     <div className='gap-x-2 hidden md:flex absolute right-6'>
                         <BsFillArrowLeftCircleFill 
                             className='cursor-pointer text-green-300 w-7 h-7' 
-                            onClick={() => navigation({dir:'left', carouselContainer:containerRef, pixels:10})}
+                            onClick={() => navigation({dir:'left', carouselContainer:containerRef, pixels:5})}
                         />
                         <BsFillArrowRightCircleFill 
                             className='cursor-pointer text-green-300 w-7 h-7' 
-                            onClick={() => navigation({dir:'right', carouselContainer:containerRef, pixels:10})}
+                            onClick={() => navigation({dir:'right', carouselContainer:containerRef, pixels:5})}
                         />
                     </div>
                 </div>
@@ -41,12 +47,11 @@ const Person = () => {
                     className='flex gap-[10px] md:gap-5 overflow-x-auto mb-8'
                     ref={containerRef}>
                         {personData?.results?.map((item, index) => {
-                            console.log(item);
                             const posterUrl = item?.profile_path
                                 ? url.poster + item?.profile_path 
                                 : noImg;
                             return(
-                                <div key={index} className='text-white'>
+                                <div key={index} className='text-white flex flex-col items-center justify-center'>
                                     <div className='w-[125px] md:w-[175px] h-[125px] md:h-[175px] object-cover object-center rounded-full overflow-hidden '>
                                         <Img src={posterUrl} className={`w-full h-full `}/>
                                     </div>
@@ -61,7 +66,15 @@ const Person = () => {
                         })}
                     </div>
                 ) : (
-                    <div>Loading...</div>
+                    <div className="castSkeleton flex gap-5 ">
+                        {skeleton()}
+                        {skeleton()}
+                        {skeleton()}
+                        {skeleton()}
+                        {skeleton()}
+                        {skeleton()}
+                        {skeleton()}
+                    </div>
                 )}
             </ContentWrapper>
         </div>

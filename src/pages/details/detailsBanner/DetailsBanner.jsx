@@ -74,7 +74,7 @@ const DetailsBanner = ({videos, crew}) => {
                                         
                                         {/* Rating & Trailer */}
                                         <div className='row flex flex-row items-center gap-[25px] mb-[25px]'>
-                                            <CircleRating rating={data.vote_average.toFixed(1)} onPage={'details'} />
+                                            <CircleRating rating={data?.vote_average?.toFixed(1)} onPage={'details'} />
                                             <div 
                                             className="playbtn flex items-center gap-[20px] cursor-pointer"
                                             onClick={() => {

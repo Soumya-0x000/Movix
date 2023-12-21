@@ -55,31 +55,31 @@ const Carousel = ({data, loading, endPointShowType, title}) => {
                         className='carouselItems flex gap-[10px] overflow-y-hidden md:gap-[20px] md:overflow-hidden' 
                         ref = {carouselContainer}>
                             {data?.map((item, index) => {
-                                const posterUrl = item.poster_path 
-                                    ? url.poster + item.poster_path 
+                                const posterUrl = item?.poster_path 
+                                    ? url.poster + item?.poster_path 
                                     : PosterFallback
                                 return (
                                     <div 
                                     key={index}
                                     className={`carouselItem w-[125px] cursor-pointer flex-shrink-0 `} 
-                                    onClick={() => navigate(`/${item.media_type || endPointShowType}/${item.id}`)}>
+                                    onClick={() => navigate(`/${item?.media_type || endPointShowType}/${item?.id}`)}>
                                         <div className="posterBlock relative w-full aspect-[1/1.5] bg-cover bg-center mb-[30px] flex items-end justify-between p-[10px]">
                                             <Img 
                                                 src={posterUrl} 
                                                 className={`w-full h-full object-cover object-center`} 
                                             />
-                                            <CircleRating rating={item.vote_average.toFixed(1)} onPage={'carousel'} />
+                                            <CircleRating rating={item?.vote_average?.toFixed(1)} onPage={'carousel'} />
                                             <div className='hidden md:flex '>
-                                                <Genres data={item.genre_ids.slice(0, 2)} onPage={'carousel'}/>
+                                                <Genres data={item?.genre_ids?.slice(0, 2)} onPage={'carousel'}/>
                                             </div>
                                         </div>
 
                                         <div className="textBlock flex flex-col text-white">
                                             <span className="title text-[16px] mb-[10px] leading-6 md:text-[20px] ">
-                                                {item.title || item.name}
+                                                {item?.title || item?.name}
                                             </span>
                                             <span className="date text-[14px] opacity-50">
-                                                {dayjs(item.release_date).format("MMM DD YYYY")}
+                                                {dayjs(item?.release_date).format("MMM DD YYYY")}
                                             </span>
                                         </div>
                                     </div>

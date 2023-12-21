@@ -63,8 +63,10 @@ const Header = () => {
     const navigationHandler = (type) => {
         if (type === "movie") {
             navigate("/explore/movie")
-        } else {
+        } else if (type === 'tv') {
             navigate("/explore/tv")
+        } else {
+            navigate('/person/popular')
         }
         setMobileMenu(false)
     }
@@ -81,6 +83,11 @@ const Header = () => {
                 className='menuItem cursor-pointer hover:text-pink'
                 onClick={() => navigationHandler('tv')}>
                     TV Shows
+                </div>
+                <div 
+                className='menuItem cursor-pointer hover:text-pink'
+                onClick={() => navigationHandler('person')}>
+                    Person
                 </div>
             </div>
         )
