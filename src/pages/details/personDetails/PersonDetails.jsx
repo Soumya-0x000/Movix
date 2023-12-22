@@ -7,6 +7,7 @@ import Img from '../../../components/lazyLoadImage/Img'
 import PosterFallback from "../../../assets/no-poster.png"
 import dayjs from 'dayjs';
 import MovieCard from '../../../components/movieCard/MovieCard';
+import Spinner from '../../../components/spinner/Spinner';
 
 const PersonDetails = () => {
     const {url} = useSelector((state) => state.home)
@@ -14,7 +15,6 @@ const PersonDetails = () => {
     const { data, loading } = useFetch(`/person/${personId?.id}/movie_credits`)
     const { data: tvCreditData, loading: isTvCreditLoading } = useFetch(`/person/${personId?.id}/tv_credits`)
     const { data: personData, loading: isPersonLoading } = useFetch(`/person/${personId?.id}`)
-    // console.log(data?.crew);
     
     return (
         <div className='pt-[120px] text-white'>
@@ -22,18 +22,18 @@ const PersonDetails = () => {
                 <div>
                     <div>
                         {loading || isPersonLoading ? (
-                            <div className='detailsBannerSkeleton flex relative gap-[25px] md:gap-[50px] '>
+                            <div className=' flex relative gap-[25px] md:gap-[50px] '>
                                 <ContentWrapper>
-                                    <div className='contentWrapper flex flex-col md:flex-row gap-[25px] md:gap-[50px] '>
-                                        <div className='left skeleton flex-shrink-0 w-full block rounded-xl aspect-[1/1.5] md:w-[350px] '></div>
-                                        <div className='right w-full hidden md:block'>
-                                            <div className="row skeleton w-full h-[25px] mb-5 rounded-[50px] "></div>
-                                            <div className="row skeleton w-1/2 h-[25px] mb-14 rounded-[50px] "></div>
-                                            <div className="row skeleton w-full h-[25px] mb-5 rounded-[50px] "></div>
-                                            <div className="row skeleton w-full h-[25px] mb-5 rounded-[50px] "></div>
-                                            <div className="row skeleton w-3/4 h-[25px] mb-14 rounded-[50px] "></div>
-                                            <div className="row skeleton w-full h-[25px] mb-5 rounded-[50px] "></div>
-                                            <div className="row skeleton w-full h-[25px] mb-5 rounded-[50px] "></div>
+                                    <div className=' flex flex-col md:flex-row gap-[25px] md:gap-[50px] '>
+                                        <div className='skeleton flex-shrink-0 w-full block rounded-xl aspect-[1/1.5] md:w-[350px] '></div>
+                                        <div className=' w-full hidden md:block'>
+                                            <div className="row skeleton w-2/4 h-[25px] mb-3 rounded-[50px] "></div>
+                                            <div className="row skeleton w-1/3 h-[25px] mb-3 rounded-[50px] "></div>
+                                            <div className="row skeleton w-1/3 h-[25px] mb-10 rounded-[50px] "></div>
+                                            <div className="row skeleton w-full h-[25px] mb-3 rounded-[50px] "></div>
+                                            <div className="row skeleton w-full h-[160px] mb-14 rounded-lg "></div>
+                                            <div className="row skeleton w-1/4 h-[25px] mb-3 rounded-[50px] "></div>
+                                            <div className="row skeleton w-1/3 h-[25px] mb-5 rounded-[50px] "></div>
                                         </div>
                                     </div>
                                 </ContentWrapper>
@@ -114,29 +114,59 @@ const PersonDetails = () => {
                                 {/* Cast */}
                                 <div>
                                     {/* Movie credit */}
-                                    <div className='mt-16'>
-                                        <div className="sectionHeading flex items-center justify-between mr-3 text-[24px] text-white mb-[25px] ">
-                                            <span>Movie Credits of {personData?.name}</span>
+                                    {loading ? (
+                                        <div>
+                                            <Spinner initial={true} />
                                         </div>
-                                        
-                                        <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[1000px] overflow-y-scroll'>
-                                            {data?.cast?.map((item, index) => (
-                                                <MovieCard
-                                                    data={item}
-                                                    mediaType='movie'
-                                                />
-                                            ))}
+                                    ) : (
+                                        <div className='mt-16'>
+                                            <div className="flex items-center justify-between mr-3 text-[24px] text-white mb-[25px] ">
+                                                <span>Movie Credits of {personData?.name}</span>
+                                            </div>
+                                            
+                                            <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[1000px] overflow-y-scroll'>
+                                                {data?.cast?.map((item, index) => (
+                                                    <MovieCard
+                                                        data={item}
+                                                        mediaType='movie'
+                                                    />
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
 
                                     {/* TV credit */}
+                                    {isTvCreditLoading ? (
+                                        <div>
+                                            <Spinner initial={true} />
+                                        </div>
+                                    ) : (
+                                        <div className='mt-16'>
+                                            <div className="sectionHeading flex items-center justify-between mr-3 text-[24px] text-white mb-[25px] ">
+                                                <span>TV Credits of {personData?.name}</span>
+                                            </div>
+                                            
+                                            <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[1000px] overflow-y-scroll'>
+                                                {tvCreditData?.cast?.map((item, index) => (
+                                                    <MovieCard
+                                                        data={item}
+                                                        mediaType='tv'
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Movie Crew */}
+                                {data?.crew?.length > 0 && (
                                     <div className='mt-16'>
                                         <div className="sectionHeading flex items-center justify-between mr-3 text-[24px] text-white mb-[25px] ">
-                                            <span>TV Credits of {personData?.name}</span>
+                                            <span>Movie Crew of {personData?.name}</span>
                                         </div>
                                         
                                         <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[1000px] overflow-y-scroll'>
-                                            {tvCreditData?.cast?.map((item, index) => (
+                                            {data?.crew?.map((item, index) => (
                                                 <MovieCard
                                                     data={item}
                                                     mediaType='tv'
@@ -144,12 +174,25 @@ const PersonDetails = () => {
                                             ))}
                                         </div>
                                     </div>
-                                </div>
+                                )}
 
-                                {/* Crew */}
-                                <div>
-                                    
-                                </div>
+                                {/* TV crew */}
+                                {tvCreditData?.crew?.length > 0 && (
+                                    <div className='mt-16'>
+                                        <div className="sectionHeading flex items-center justify-between mr-3 text-[24px] text-white mb-[25px] ">
+                                            <span>TV Crew of {personData?.name}</span>
+                                        </div>
+                                        
+                                        <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[1000px] overflow-y-scroll'>
+                                            {tvCreditData?.crew?.map((item, index) => (
+                                                <MovieCard
+                                                    data={item}
+                                                    mediaType='tv'
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
