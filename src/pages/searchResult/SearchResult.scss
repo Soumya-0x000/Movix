@@ -1,0 +1,54 @@
+@import "../../mixins.scss";
+
+.react-select-container {
+    font-size: large;
+    &.filtersDD {
+        width: 100%;
+        @include md {
+            max-width: 250px;
+            min-width: 250px;
+        }
+    }
+    .react-select__menu {
+        border-radius: 13px;
+        overflow: hidden;
+        background-color: var(--black-lighter);
+        color: rgb(182, 220, 255);
+        .react-select__option{
+            background-color: var(--black-lighter);
+            &:hover  {
+                background-color: rgb(182, 220, 255);
+                color: var(--black-lighter);
+            }
+        }
+    }
+    .react-select__control {
+        border: 0;
+        outline: 0;
+        box-shadow: none;
+        background-color: var(--black-light);
+        border-radius: 20px;
+        .react-select__value-container {
+            .react-select__placeholder,
+            .react-select__input-container {
+                color: rgb(157, 232, 255);
+                margin: 0 10px;
+            }
+        }
+        .css-tj5bde-Svg {
+            color: rgb(164, 201, 255);
+        }
+        .react-select__single-value {
+            color: white;
+        }
+        .react-select__single-value {
+            padding-left: 10px;
+            color: rgb(164, 201, 255);
+        }
+    }
+    .react-select__menu {
+        top: 40px;
+        margin: 0;
+        padding: 0;
+    }
+}

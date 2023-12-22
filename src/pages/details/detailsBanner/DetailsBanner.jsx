@@ -130,7 +130,7 @@ const DetailsBanner = ({videos, crew}) => {
                                         
                                         {/* Language */}
                                         <div className='flex flex-col sm:flex-row gap-x-6 border-b-[1px] border-b-[#ffffff25]'>
-                                            {data?.spoken_languages.length > 0 && (
+                                            {data?.spoken_languages?.length > 0 && (
                                                 <div className={`info flex py-4 border-b-[1px] border-b-[#ffffff25] sm:border-none`}>
                                                     <span className="text bold font-bold opacity-100 mr-[10px] ">
                                                         Language: {" "}

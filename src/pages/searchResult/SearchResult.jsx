@@ -7,7 +7,8 @@ import { useParams } from 'react-router-dom'
 import Spinner from '../../components/spinner/Spinner'
 import MovieCard from '../../components/movieCard/MovieCard'
 import Img from '../../components/lazyLoadImage/Img'
-import SwitchTabs from '../../components/switchTabs/SwitchTabs'
+import Select from 'react-select'
+import './SearchResult.scss'
 
 const SearchResult = () => {
     const [endPointShowType, setEndPointShowType] = useState('multi')
@@ -18,7 +19,7 @@ const SearchResult = () => {
     
     const fetchInitialData = () => {
         setLoading(true)
-        fetchDataFromApi(`/search/${endPointShowType}?query=${query}&include_adult=true`).then((res) => {
+        fetchDataFromApi(`/search/${endPointShowType ? endPointShowType : 'multi'}?query=${query}&include_adult=true`).then((res) => {
             setData(res)
             setPageNum((prev) => prev + 1)
             setLoading(false)
@@ -26,7 +27,7 @@ const SearchResult = () => {
     }
 
     const fetchNextPageData = () => {
-        fetchDataFromApi(`/search/${endPointShowType}?query=${query}&page=${pageNum}&include_adult=true`).then((res) => {
+        fetchDataFromApi(`/search/${endPointShowType ? endPointShowType : 'multi'}?query=${query}&page=${pageNum}&include_adult=true`).then((res) => {
             if(data?.results) {
                 setData({...data, results: [...data.results, ...res.results]})
             } else {
@@ -36,22 +37,29 @@ const SearchResult = () => {
         })
     }
     
-    const onTabChangeShowType = (tab) => {
-        if (tab === 'Movie') {
-            setEndPointShowType('movie')
-        } else if (tab === 'TV Shows') {
-            setEndPointShowType('tv')
-        } else if (tab === 'Person') {
-            setEndPointShowType('person')
+    const onTabChangeShowType = (selectedOption, action) => {
+        if (action.action === 'clear') {
+            setEndPointShowType(null)
         } else {
-            setEndPointShowType('multi')
+            setEndPointShowType(selectedOption.value)
         }
     }
 
     useEffect(() => {
         setPageNum(1)
         fetchInitialData()
+    }, [query, endPointShowType])
+    
+    useEffect(() => {
+        setEndPointShowType(null)
     }, [query])
+
+    const filterOptions = [
+        { value: 'multi', label: 'All' },
+        { value: 'movie', label: 'Movie' },
+        { value: 'tv', label: 'TV Shows' },
+        { value: 'person', label: 'Person' },
+    ]
 
     return (
         <div className='searchResultsPage min-h-[700px] pt-[80px]'>
@@ -62,12 +70,18 @@ const SearchResult = () => {
                     {data?.results?.length > 0 ? (
                         <>
                             <div className="pageTitle text-[24px] leading-[34px] text-white mb-6 flex flex-col gap-y-3 md:flex-row items-center justify-between">
-                                <div>
+                                <div className='w-full'>
                                     {`Search ${data?.total_results > 1 ? 'results' : 'result'} for '${query}'`}
                                 </div>
-                                <div>
-                                    <SwitchTabs data={['All', 'Movie', 'TV Shows', 'Person']} onTabChange={onTabChangeShowType} size='80px'/>
-                                </div>
+                                <Select
+                                    value={endPointShowType ? filterOptions.find(option => option.value === endPointShowType) : null}
+                                    options={filterOptions}
+                                    onChange={onTabChangeShowType}
+                                    isClearable={true}
+                                    placeholder='Sort by'
+                                    className='react-select-container filtersDD'
+                                    classNamePrefix='react-select'
+                                />
                             </div>
 
                             <InfiniteScroll
@@ -81,7 +95,7 @@ const SearchResult = () => {
                                         <MovieCard 
                                             key={index} 
                                             data={item} 
-                                            mediaType={item.media_type}
+                                            mediaType={item.media_type || endPointShowType}
                                         />
                                     )
                                 })}
