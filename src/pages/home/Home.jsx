@@ -3,7 +3,7 @@ import HeroBanner from './heroBanner/HeroBanner'
 import Trending from './trending/Trending'
 import Popular from './popular/Popular'
 import TopRated from './topRated/TopRated'
-import Person from './person/Person'
+import PopularPerson from './popularPerson/PopularPerson'
 
 const Home = () => {
     return (
@@ -12,7 +12,7 @@ const Home = () => {
             <Trending/>
             <Popular/>
             <TopRated/>
-            <Person/>
+            <PopularPerson/>
         </div>
     )
 }

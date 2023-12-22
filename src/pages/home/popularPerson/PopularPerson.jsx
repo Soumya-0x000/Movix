@@ -6,11 +6,13 @@ import noImg from '../../../assets/no-poster.png'
 import Img from '../../../components/lazyLoadImage/Img'
 import {BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill} from 'react-icons/bs'
 import {navigation} from '../../../components/navigationIcon/navigation'
+import { useNavigate } from 'react-router-dom'
 
-const Person = () => {
+const PopularPerson = () => {
     const { data: personData, loading: isPersonLoading } = useFetch(`/person/popular`)
     const { url } = useSelector((state) => state.home)
     const containerRef = useRef()
+    const navigate = useNavigate()
 
     const skeleton = () => {
         return (
@@ -51,7 +53,11 @@ const Person = () => {
                                 ? url.poster + item?.profile_path 
                                 : noImg;
                             return(
-                                <div key={index} className='text-white flex flex-col items-center justify-center'>
+                                <div 
+                                key={index} 
+                                className='text-white flex flex-col items-center justify-center'
+                                onClick={() => navigate(`/person/${item?.id}`)}>
+                                    
                                     <div className='w-[125px] md:w-[175px] h-[125px] md:h-[175px] object-cover object-center rounded-full overflow-hidden '>
                                         <Img src={posterUrl} className={`w-full h-full `}/>
                                     </div>
@@ -81,4 +87,4 @@ const Person = () => {
     )
 }
 
-export default Person
+export default PopularPerson

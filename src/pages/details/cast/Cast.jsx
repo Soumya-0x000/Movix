@@ -5,10 +5,12 @@ import ContentWrapper from '../../../components/contentWrapper/ContentWrapper'
 import avatar from '../../../assets/avatar.png'
 import Img from '../../../components/lazyLoadImage/Img'
 import {navigation} from '../../../components/navigationIcon/navigation'
+import { useNavigate } from 'react-router-dom'
 
 const Cast = ({data, loading}) => {
     const { url } = useSelector((state) => state.home)
     const castContainer = useRef()
+    const navigate = useNavigate()
 
     const skeleton = () => {
         return (
@@ -57,8 +59,9 @@ const Cast = ({data, loading}) => {
                                         : avatar
                                     return (
                                         <div 
-                                        className="listItem flex flex-col justify-between w-[125px] md:w-[175px] h-[325px] md:h-[250px] text-white"
-                                        key={item.id}>
+                                        className="listItem cursor-pointer flex flex-col justify-between w-[125px] md:w-[175px] h-[325px] md:h-[250px] text-white"
+                                        key={item.id}
+                                        onClick={() => navigate(`/person/${item.id}`)}>
                                             <div className="profileImg w-[125px] md:w-[175px] h-[125px] md:h-[175px] rounded-full overflow-hidden mb-4 md:mb-6">
                                                 <Img src={imgUrl}/>
                                             </div>

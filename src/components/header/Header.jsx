@@ -13,6 +13,7 @@ const Header = () => {
     const [mobileMenu, setMobileMenu] = useState(false);
     const [query, setQuery] = useState("");
     const [showSearch, setShowSearch] = useState("");
+    const [isPink, setIsPink] = useState(false)
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -73,20 +74,26 @@ const Header = () => {
 
     const navigationContent = (alignment) => {
         return (
-            <div className={`flex flex-${alignment} gap-x-6 gap-y-4 py-3 pl-3`}>
+            <div className={`flex flex-row items-center justify-around md:gap-x-6 ring-2 py-2 md:py-1.5 md:px-6 md:rounded-full ${isPink ? 'ring-pink' : 'ring-cyan-500 '} text-cyan-300`}>
                 <div 
                 className='menuItem cursor-pointer hover:text-pink'
-                onClick={() => navigationHandler('movie')}>
+                onClick={() => navigationHandler('movie')}
+                onMouseEnter={() => setIsPink(true)}
+                onMouseLeave={() => setIsPink(false)}>
                     Movies
                 </div>
                 <div 
                 className='menuItem cursor-pointer hover:text-pink'
-                onClick={() => navigationHandler('tv')}>
+                onClick={() => navigationHandler('tv')}
+                onMouseEnter={() => setIsPink(true)}
+                onMouseLeave={() => setIsPink(false)}>
                     TV Shows
                 </div>
                 <div 
                 className='menuItem cursor-pointer hover:text-pink'
-                onClick={() => navigationHandler('person')}>
+                onClick={() => navigationHandler('person')}
+                onMouseEnter={() => setIsPink(true)}
+                onMouseLeave={() => setIsPink(false)}>
                     Person
                 </div>
             </div>

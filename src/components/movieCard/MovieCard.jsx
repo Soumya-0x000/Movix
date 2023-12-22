@@ -25,11 +25,13 @@ const MovieCard = ({data, mediaType}) => {
         <div 
         className='movieCard mb-6 cursor-pointer flex-shrink-0 '
         onClick={() => navigate(`/${data?.media_type || mediaType}/${data?.id}`)}>
-            <div className="posterBlock relative w-full aspect-[1/1.5] bg-cover bg-center mb-[20px] sm:mb-[30px] flex items-end justify-between p-[0px] transition-all duration-500 hover:opacity-50">
+            <div className={`posterBlock relative w-full aspect-[1/1.5] bg-cover bg-center ${mediaType === 'person' ? 'mb-[5px] sm:mb-[10px]' : 'mb-[20px] sm:mb-[30px]' } flex items-end justify-between p-[0px] transition-all duration-500 hover:opacity-50`}>
                 <Img src={posterUrl()} className={`posterImg w-full h-full object-cover object-center`} />
-                <div className='absolute hidden xsm:block left-3 bottom-2 z-20 '>
-                    <CircleRating rating={data?.vote_average?.toFixed(1) || Math.round(data?.popularity)} onPage='searchResult' mediaType={mediaType}/>
-                </div>
+                {!mediaType === 'person' && (
+                    <div className='absolute hidden xsm:block left-3 bottom-2 z-20 '>
+                        <CircleRating rating={data?.vote_average?.toFixed(1)} onPage='searchResult' mediaType={mediaType}/>
+                    </div>
+                )}
                 <div className='z-10 absolute right-2 bottom-2 w-[70%] lg:w-[65%] hidden mbl:block '>
                     <Genres data={data?.genre_ids?.slice(0,2)} onPage='searchResult'/>
                 </div>
@@ -40,9 +42,14 @@ const MovieCard = ({data, mediaType}) => {
                     {data?.title || data?.name}
                 </span>
                 {mediaType === 'person' ? (
-                    <span className={`opacity-50 text-[13px] sm:text-[15px] md:text-[14px]`}>
-                        {data?.known_for_department}
-                    </span>
+                    <div className='flex justify-between items-center ring-2 text-pink ring-pink rounded-md px-2 py-1 mx-1 '>
+                        <span className={`opacity-90 font-bold text-[13px] sm:text-[15px] md:text-[14px] `}>
+                            {data?.known_for_department}
+                        </span>
+                        <span className='text-pink text-sm font-bold'>
+                            {Math.round(data?.popularity)}
+                        </span>
+                    </div>
                 ) : (
                     <span className={`opacity-50 text-[13px] sm:text-[15px] md:text-[14px]`}>
                         {dayjs(data?.release_date).format('MMM DD, YYYY')}
