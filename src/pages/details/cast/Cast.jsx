@@ -59,13 +59,13 @@ const Cast = ({data, loading}) => {
                                         : avatar
                                     return (
                                         <div 
-                                        className="listItem cursor-pointer flex flex-col justify-between w-[125px] md:w-[175px] h-[325px] md:h-[250px] text-white"
+                                        className="listItem cursor-pointer flex flex-col justify-between text-white"
                                         key={item.id}
                                         onClick={() => navigate(`/person/${item.id}`)}>
-                                            <div className="profileImg w-[125px] md:w-[175px] h-[125px] md:h-[175px] rounded-full overflow-hidden mb-4 md:mb-6">
+                                            <div className="profileImg w-[125px] h-[125px] md:w-[175px] md:h-[175px] rounded-full overflow-hidden mb-4 md:mb-6">
                                                 <Img src={imgUrl}/>
                                             </div>
-                                            <div className="name text-[14px] md:text-[18px] text-center leading-5 md:left-6 font-bold truncate ">
+                                            <div className="name text-[14px] md:text-[18px] text-center leading-5 font-bold truncate ">
                                                 {item.name}
                                             </div>
                                             <div className="character text-[14px] md:text-[16px] leading-5 mt-2 opacity-50 truncate text-center ">

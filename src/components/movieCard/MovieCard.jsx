@@ -27,7 +27,8 @@ const MovieCard = ({data, mediaType}) => {
         onClick={() => navigate(`/${data?.media_type || mediaType}/${data?.id}`)}>
             <div className={`posterBlock relative w-full aspect-[1/1.5] bg-cover bg-center ${mediaType === 'person' ? 'mb-[5px] sm:mb-[10px]' : 'mb-[20px] sm:mb-[30px]' } flex items-end justify-between p-[0px] transition-all duration-500 hover:opacity-50`}>
                 <Img src={posterUrl()} className={`posterImg w-full h-full object-cover object-center`} />
-                {!mediaType === 'person' && (
+                {mediaType === 'person' ? (<></>
+                ) : (
                     <div className='absolute hidden xsm:block left-3 bottom-2 z-20 '>
                         <CircleRating rating={data?.vote_average?.toFixed(1)} onPage='searchResult' mediaType={mediaType}/>
                     </div>
