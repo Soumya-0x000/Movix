@@ -12,7 +12,7 @@ import Spinner from '../../../components/spinner/Spinner';
 const PersonDetails = () => {
     const {url} = useSelector((state) => state.home)
     const personId = useParams()
-    const { data, loading } = useFetch(`/person/${personId?.id}/movie_credits`)
+    const { data: movieCreditData, loading: isMovieCreditLoading } = useFetch(`/person/${personId?.id}/movie_credits`)
     const { data: tvCreditData, loading: isTvCreditLoading } = useFetch(`/person/${personId?.id}/tv_credits`)
     const { data: personData, loading: isPersonLoading } = useFetch(`/person/${personId?.id}`)
     
@@ -21,7 +21,7 @@ const PersonDetails = () => {
             <ContentWrapper>
                 <div>
                     <div>
-                        {loading || isPersonLoading ? (
+                        {isMovieCreditLoading || isPersonLoading ? (
                             <div className=' flex relative gap-[25px] md:gap-[50px] '>
                                 <ContentWrapper>
                                     <div className=' flex flex-col md:flex-row gap-[25px] md:gap-[50px] '>
@@ -112,61 +112,68 @@ const PersonDetails = () => {
                                 </div>
 
                                 {/* Cast */}
-                                <div>
-                                    {/* Movie credit */}
-                                    {loading ? (
-                                        <div>
-                                            <Spinner initial={true} />
-                                        </div>
-                                    ) : (
-                                        <div className='mt-16'>
-                                            <div className="flex items-center justify-between mr-3 text-[24px] text-white mb-[25px] ">
-                                                <span>Movie Credits of {personData?.name}</span>
-                                            </div>
-                                            
-                                            <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[1000px] overflow-y-scroll'>
-                                                {data?.cast?.map((item, index) => (
-                                                    <MovieCard
-                                                        data={item}
-                                                        mediaType='movie'
-                                                    />
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
 
-                                    {/* TV credit */}
-                                    {isTvCreditLoading ? (
-                                        <div>
-                                            <Spinner initial={true} />
-                                        </div>
-                                    ) : (
-                                        <div className='mt-16'>
-                                            <div className="sectionHeading flex items-center justify-between mr-3 text-[24px] text-white mb-[25px] ">
-                                                <span>TV Credits of {personData?.name}</span>
+                                {/* Movie credit */}
+                                {isMovieCreditLoading ? (
+                                    <div>
+                                        <Spinner initial={true} />
+                                    </div>
+                                ) : ( 
+                                    <>
+                                        {movieCreditData?.cast?.length > 0 && (
+                                            <div className='mt-16'>
+                                                <div className="flex items-center justify-between mr-3 text-[24px] text-white mb-[25px] ">
+                                                    <span>Movie{movieCreditData?.cast?.length == 1 ? '' : 's' } by {personData?.name}</span>
+                                                </div>
+                                                
+                                                <div className='flex gap-[10px] md:gap-5 flex-wrap mb-5 max-h-[700px] md:max-h-[750px] lg:max-h-[800px] overflow-x-scroll'>
+                                                    {movieCreditData?.cast?.map((item, index) => (
+                                                        <MovieCard
+                                                            data={item}
+                                                            mediaType='movie'
+                                                        />
+                                                    ))}
+                                                </div>
                                             </div>
-                                            
-                                            <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[1000px] overflow-y-scroll'>
-                                                {tvCreditData?.cast?.map((item, index) => (
-                                                    <MovieCard
-                                                        data={item}
-                                                        mediaType='tv'
-                                                    />
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                                        )}
+                                    </>
+                                )}
 
+                                {/* TV credit */}
+                                {isTvCreditLoading ? (
+                                    <div>
+                                        <Spinner initial={true} />
+                                    </div>
+                                ) : (
+                                    <>
+                                        {tvCreditData?.cast?.length > 0 && (
+                                            <div className='mt-16'>
+                                                <div className="sectionHeading flex items-center justify-between mr-3 text-[24px] text-white mb-[25px] ">
+                                                    <span>TV Show {tvCreditData?.cast?.length == 1 ? '' : 's'} by {personData?.name}</span>
+                                                </div>
+                                                
+                                                <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[700px] md:max-h-[750px] lg:max-h-[800px] overflow-y-scroll'>
+                                                    {tvCreditData?.cast?.map((item, index) => (
+                                                        <MovieCard
+                                                            data={item}
+                                                            mediaType='tv'
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+                               
                                 {/* Movie Crew */}
-                                {data?.crew?.length > 0 && (
+                                {movieCreditData?.crew?.length > 0 && (
                                     <div className='mt-16'>
                                         <div className="sectionHeading flex items-center justify-between mr-3 text-[24px] text-white mb-[25px] ">
                                             <span>Movie Crew of {personData?.name}</span>
                                         </div>
                                         
-                                        <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[1000px] overflow-y-scroll'>
-                                            {data?.crew?.map((item, index) => (
+                                        <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[700px] md:max-h-[750px] lg:max-h-[800px] overflow-y-scroll'>
+                                            {movieCreditData?.crew?.map((item, index) => (
                                                 <MovieCard
                                                     data={item}
                                                     mediaType='tv'
@@ -183,7 +190,7 @@ const PersonDetails = () => {
                                             <span>TV Crew of {personData?.name}</span>
                                         </div>
                                         
-                                        <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[1000px] overflow-y-scroll'>
+                                        <div className='flex gap-[10px] md:gap-5 flex-wrap mb-8 max-h-[700px] md:max-h-[750px] lg:max-h-[800px] overflow-y-scroll'>
                                             {tvCreditData?.crew?.map((item, index) => (
                                                 <MovieCard
                                                     data={item}

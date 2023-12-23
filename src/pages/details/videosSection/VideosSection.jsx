@@ -61,11 +61,11 @@ const VideosSection = ({data, loading}) => {
                                             <PlayIcon/>
                                         </div>
 
-                                        <div className="videoTitle text-white text-[14px] md:text-[16px] leading-5 md:leading-6 ">
+                                        <div className="videoTitle text-white text-[14px] md:text-[16px] leading-5 md:leading-6 truncate ">
                                             {video.name}
                                         </div>
                                         
-                                        <div className="videoTitle text-white text-[14px] md:text-[15px] leading-5 md:leading-6 opacity-50">
+                                        <div className="videoTitle text-white text-[14px] md:text-[15px] leading-5 md:leading-6 opacity-50 truncate">
                                             {video.type}
                                         </div>
                                     </div>
