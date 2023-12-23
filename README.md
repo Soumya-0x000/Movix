@@ -1,4 +1,3 @@
-
 # Movix Web App
 
 Movix is a web application that allows users to search for movies, TV shows, and persons. It utilizes the TMDB API to fetch data and provide users with information about their favorite entertainment.
@@ -47,7 +46,9 @@ cd Movix
 2. Install dependencies:
 
 ```bash
-npm install
+npm i
+npm i @reduxjs/toolkit axios dayjs react react-circular-progressbar react-dom react-icons react-infinite-scroll-component react-lazy-load-image-component react-player react-redux react-router-dom react-select sass @types/react @types/react-dom @vitejs/plugin-react autoprefixer eslint eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh postcss tailwindcss vite --save
+
 ```
 
 3. Start the development server:
