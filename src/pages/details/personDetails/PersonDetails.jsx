@@ -8,6 +8,7 @@ import PosterFallback from "../../../assets/no-poster.png"
 import dayjs from 'dayjs';
 import MovieCard from '../../../components/movieCard/MovieCard';
 import Spinner from '../../../components/spinner/Spinner';
+import './personDetails.scss'
 
 const PersonDetails = () => {
     const {url} = useSelector((state) => state.home)
@@ -45,7 +46,7 @@ const PersonDetails = () => {
                                     {/* Image */}
                                     <div className="left flex-shrink-0 ">
                                         {personData?.profile_path ? (
-                                            <Img className={`posterImg w-full md:max-w-[350px] block rounded-xl h-full `} src={url.profile + personData?.profile_path} />
+                                            <Img className={` w-full md:max-w-[350px] block rounded-xl h-full `} src={url.profile + personData?.profile_path} />
                                             ) : (
                                             <Img className={`posterImg w-full md:max-w-[350px] block rounded-xl h-full `} src={PosterFallback} />
                                         )}

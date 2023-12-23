@@ -61,7 +61,7 @@ const PopularPerson = () => {
                                     <div className='w-[125px] md:w-[175px] h-[125px] md:h-[175px] object-cover object-center rounded-full overflow-hidden '>
                                         <Img src={posterUrl} className={`w-full h-full `}/>
                                     </div>
-                                    <div className="name mt-4 text-[14px] md:text-[18px] leading-5 md:left-6 font-bold ">
+                                    <div className="name mt-4 text-[14px] md:text-[18px] leading-5 font-bold truncate ">
                                         {item.name}
                                     </div>
                                     <div className="character text-[14px] md:text-[16px] leading-5 mt-2 md:left-6 opacity-50">
