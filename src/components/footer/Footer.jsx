@@ -26,7 +26,7 @@ const Footer = () => {
     ]
 
     return (
-        <footer className='footer bg-black3 py-[2rem] z-50'>
+        <footer className='bg-black3 py-[2rem]'>
             <ContentWrapper>
                 <div className='text-white text-sm md:text-[16px] flex flex-col items-center justify-center gap-y-10'>
                     <div className='flex gap-x-5 md:gap-x-8'>

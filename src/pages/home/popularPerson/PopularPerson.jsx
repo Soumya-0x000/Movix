@@ -55,7 +55,7 @@ const PopularPerson = () => {
                             return(
                                 <div 
                                 key={index} 
-                                className='text-white flex flex-col items-center justify-center'
+                                className='text-white flex flex-col cursor-pointer items-center justify-center'
                                 onClick={() => navigate(`/person/${item?.id}`)}>
                                     
                                     <div className='w-[125px] md:w-[175px] h-[125px] md:h-[175px] object-cover object-center rounded-full overflow-hidden '>
