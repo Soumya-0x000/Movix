@@ -6,6 +6,7 @@ import {
     FaLinkedin,
     FaGithub
 } from "react-icons/fa";
+import { RiAccountPinBoxLine } from "react-icons/ri";
 import './Footer.scss'
 import { Link } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ const Footer = () => {
         {icon: <FaInstagram />, link: 'https://www.instagram.com/soumya_s_das/'},  
         {icon: <FaLinkedin />, link: 'https://www.linkedin.com/in/soumya-sankar-das-874085221/'}, 
         {icon: <FaGithub />, link: 'https://github.com/Soumya-0x000'}, 
+        {icon: <RiAccountPinBoxLine />, link: 'https://portfolio-five-mu-72.vercel.app/'}, 
     ]
 
     return (
