@@ -21,7 +21,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-lazy-load-image-component": "^1.6.0",
     "react-player": "^2.13.0",
-    "react-redux": "^9.0.2",
+    "react-redux": "^9.0.4",
     "react-router-dom": "^6.20.1",
     "react-select": "^5.8.0",
     "sass": "^1.69.5"
