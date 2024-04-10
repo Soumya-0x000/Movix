@@ -39,7 +39,7 @@ Check out the live version: [Movix Live](https://movix-puce-alpha.vercel.app/)
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Soumya-0x000/Movix.git
+git clone https://github.com/Soumya-0x0000/Movix.git
 cd Movix
 ```
 
