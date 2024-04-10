@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import ContentWrapper from '../../../components/contentWrapper/ContentWrapper'
 import useFetch from '../../../hooks/useFetch'
 import { useSelector } from 'react-redux'
